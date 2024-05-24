@@ -1,0 +1,23 @@
+name: 'Code Coverage'
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+     # - name: Install dependencies
+      #  run: npm install
+
+      #- name: Run tests and generate coverage report
+      #  run: npm test -- --coverage --coverageReporters=cobertura
+
+      - name: Post coverage details
+        uses: dubakur/OwnAction/actions/post-coverage@main
+        with:
+          cobertura-report-path: 'coverage/cobertura-coverage.xml'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
