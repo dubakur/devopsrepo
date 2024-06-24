@@ -1,0 +1,31 @@
+name: Run Shell Script
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Make script executable
+      run: chmod +x script.sh
+
+    - name: Run script with parameters and capture output
+      id: run_script
+      run: |
+        param1=5
+        param2=10
+        result=$(./script.sh $param1 $param2)
+        echo "script_result=$result" >> $GITHUB_ENV
+
+    - name: Print result
+      run: echo "The result from the script is ${{ env.script_result }}"
