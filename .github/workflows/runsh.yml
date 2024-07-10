@@ -22,10 +22,9 @@ jobs:
     - name: Run script with parameters and capture output
       id: run_script
       run: |
-        param1=5
-        param2=10
-        result=$(./script.sh $param1 $param2)
-        echo "script_result=$result" >> $GITHUB_ENV
-
-    - name: Print result
-      run: echo "The result from the script is ${{ env.script_result }}"
+        ./script.sh
+    #    param1=5
+    #    param2=10
+    #    result=$(./script.sh $param1 $param2)
+    #    echo "script_result=$result" >> $GITHUB_ENV
+          
