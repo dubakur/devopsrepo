@@ -6,7 +6,7 @@
 
 echo "Hello world!"
 # Assuming apps_in_json_format contains the JSON array
-projects="project1 project2" 
+projects="project1" 
 apps_in_json_format=$(echo $projects| jq -Rc 'split(" ")')
 
 # Count the number of elements in the JSON array
