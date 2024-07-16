@@ -8,10 +8,15 @@ jobs:
   check-modules:
     runs-on: ubuntu-latest
     steps:
-      - name: Print GitHub Environment Variables
+
+      - name: Print all context variables
         run: |
-          echo "GitHub Environment Variables:"
-          env
+          echo "GITHUB_CONTEXT:"
+          echo "${{ toJson(github) }}"
+
+          echo "JOB_CONTEXT:"
+          echo "${{ toJson(job) }}"
+
 
       - name: Checkout code
         uses: actions/checkout@v3
