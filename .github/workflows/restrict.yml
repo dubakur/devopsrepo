@@ -8,6 +8,11 @@ jobs:
   check-modules:
     runs-on: ubuntu-latest
     steps:
+      - name: Print GitHub Environment Variables
+        run: |
+          echo "GitHub Environment Variables:"
+          env | grep GITHUB_
+
       - name: Checkout code
         uses: actions/checkout@v3
 
