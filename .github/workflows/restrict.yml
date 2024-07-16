@@ -15,7 +15,7 @@ jobs:
         id: changed-files
         run: |
           # Fetch the base branch to compare changes
-          git fetch origin ${{ github.base_ref }}
+          git fetch origin ${{ github.base_ref }} --depth=1
           # Get the list of changed files between the base branch and the PR branch
           git diff --name-only origin/${{ github.base_ref }}...${{ github.sha }} > changed_files.txt
           echo "changed_files=$(cat changed_files.txt)" >> $GITHUB_ENV
