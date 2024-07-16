@@ -1,0 +1,49 @@
+name: Restrict Module Changes
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  check-modules:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Print all context variables
+        run: |
+          echo "GITHUB_CONTEXT:"
+          echo "${{ toJson(github) }}"
+
+          echo "JOB_CONTEXT:"
+          echo "${{ toJson(job) }}"
+
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get list of changed files
+        id: changed-files
+        run: |
+          # Fetch the base branch to compare changes
+          git fetch origin ${{ github.base_ref }} --depth=1
+          # Get the list of changed files between the base branch and the PR branch
+          git diff --name-only ${{ github.event.pull_request.base.sha }}...${{ github.sha }} > changed_files.txt
+          echo "changed_files=$(cat changed_files.txt)" >> $GITHUB_ENV
+
+      - name: Count changed modules
+        id: count-modules
+        run: |
+          # Extract the second-level directories (modules) from the src directory
+          modules=$(cat changed_files.txt | grep -o '^src/[^/]*/' | sort | uniq)
+          echo "modules=$modules" >> $GITHUB_ENV
+          # Count the number of unique modules
+          module_count=$(echo "$modules" | wc -l)
+          echo "module_count=$module_count" >> $GITHUB_ENV
+
+      - name: Fail if more than one module is changed
+        run: |
+          # Check if more than one module is changed
+          if [ ${{ env.module_count }} -gt 1 ]; then
+            echo "More than one module changed. Please submit changes to one module per pull request."
+            exit 1
+          fi
