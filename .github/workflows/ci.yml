@@ -1,0 +1,31 @@
+name: CI
+
+run-name: 'random CI'
+
+on: 
+  workflow_dispatch:
+    inputs:
+      apps:
+        description: 'apps'
+        default: '["app1","app2"]'
+        type: string
+      deploy-to-dev:
+        description: 'deploy-to-dev'
+        default: true
+        type: boolean
+  push:
+
+
+jobs:
+  
+  set-env-var:
+    name: set up
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo statement
+        shell: bash
+        run: |
+          echo "hi, how do you do"
+  
+    
+        
