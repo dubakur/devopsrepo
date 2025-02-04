@@ -1,6 +1,6 @@
 name: CI
 
-run-name: ${{ github.event.pull_request.merged && github.event.pull_request.title || github.event_name == 'push' && 'CI (All) with deployment to dev' || 'CI ' (inputs.apps == '' && 'All' || join(fromJson(inputs.apps), ',')) (inputs['deploy-to-dev'] && ' with deployment to dev' || ' without deployment to dev') }}
+run-name: ${{ github.event.pull_request.merged && github.event.pull_request.title || github.event_name == 'push' && 'CI (All) with deployment to dev'}}  ${{'CI '}} ${{inputs.apps == '' && 'All' || join(fromJson(inputs.apps), ',') }} ${{')'}} ${{inputs['deploy-to-dev'] && ' with deployment to dev' || ' without deployment to dev') }}
 
 
 on: 
