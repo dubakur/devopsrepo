@@ -2,14 +2,16 @@ name: CI
 
 run-name: >
   ${{ 
-    github.event_name == 'pull_request' && github.event.pull_request.merged && github.event.pull_request.title ||
-    (github.event_name == 'push' && 'CI (All) with deployment to dev') ||
+    github.event_name == 'pull_request' && github.event.pull_request.merged && github.event.pull_request.title || 
+    (github.event_name == 'push' && 'CI (All) with deployment to dev') || 
     (github.event_name == 'workflow_dispatch' && (
       inputs.apps == '' && 
-      format('CI (All){}', inputs['deploy-to-dev'] && ' with deployment to dev' || ' without deployment to dev') ||
-      format('CI ({}){}', join(fromJson(inputs.apps), ','), inputs['deploy-to-dev'] && ' with deployment to dev' || ' without deployment to dev')
+        format('CI (All){}', inputs['deploy-to-dev'] && ' with deployment to dev' || ' without deployment to dev') ||
+      inputs.apps != '' && 
+        format('CI ({}){}', join(fromJson(inputs.apps), ','), inputs['deploy-to-dev'] && ' with deployment to dev' || ' without deployment to dev')
     ))
   }}
+  
 on: 
   workflow_dispatch:
     inputs:
