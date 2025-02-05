@@ -6,9 +6,9 @@ run-name: |
     (github.event_name == 'push' && 'CI (All) with deployment to dev') ||
     (github.event_name == 'workflow_dispatch' && (
       inputs.apps == '' &&
-        format('CI (All){0}', inputs['deploy-to-dev'] == 'true' && ' with deployment to dev' || ' without deployment to dev') ||
+        format('CI (All){0}', inputs['deploy-to-dev'] && ' with deployment to dev' || ' without deployment to dev') ||
       inputs.apps != '' &&
-        format('CI ({0}){1}', join(fromJson(inputs.apps), ','), inputs['deploy-to-dev'] == 'true' && ' with deployment to dev' || ' without deployment to dev')
+        format('CI ({0}){1}', join(fromJson(inputs.apps), ','), inputs['deploy-to-dev'] && ' with deployment to dev' || ' without deployment to dev')
     ))
   }}
   
