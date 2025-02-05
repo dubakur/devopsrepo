@@ -23,7 +23,8 @@ on:
         default: true
         type: boolean
   push:
-
+  pull_request:
+    types: [closed]
 
 jobs:
   
